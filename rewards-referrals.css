@@ -28,6 +28,11 @@
     gap: 16px;
     width: 100%;
   }
+  @media screen and (max-width: 767px) {
+    .reward-ladder {
+      gap: 8px;
+    }
+  }
 
   /* ==========================================================
    INDIVIDUAL REWARD RUNG
