@@ -1,0 +1,473 @@
+
+  /* ==========================================================
+   REFERRAL REWARD LADDER
+   ========================================================== */
+
+  .reward-ladder-block {
+    --reward-orange: #c56129;
+    --reward-orange-light: #f5ad59;
+    --reward-surface: #17171a;
+    --reward-text: #ece9e2;
+    --reward-muted: #8c887f;
+    --reward-line: rgba(255, 255, 255, 0.09);
+    --reward-line-orange: rgba(197, 97, 41, 0.4);
+    --reward-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    width: 100%;
+    font-family: 'General Sans', sans-serif;
+  }
+
+  /* ==========================================================
+   LADDER GRID
+   ========================================================== */
+
+  .reward-ladder {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: end;
+    gap: 16px;
+    width: 100%;
+  }
+
+  /* ==========================================================
+   INDIVIDUAL REWARD RUNG
+   ========================================================== */
+
+  .reward-rung {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    overflow: hidden;
+
+    /*background-color: var(--reward-surface);*/
+    border: 1px solid var(--reward-line);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+
+    transition:
+      transform 300ms var(--reward-ease),
+      border-color 300ms var(--reward-ease);
+  }
+
+  .reward-rung:hover {
+    transform: translateY(-4px);
+    border-color: var(--reward-line-orange);
+  }
+
+  /* ==========================================================
+   REWARD TEXT
+   ========================================================== */
+
+  .reward-meta {
+    position: relative;
+    z-index: 2;
+
+    padding: 24px;
+    text-align: left;
+  }
+
+  .reward-amount {
+    /*color: var(--reward-text);*/
+    font-size: clamp(24px, 3.4vw, 38px);
+    line-height: 1;
+  }
+
+  .reward-label {
+    margin-top: 8px;
+
+    color: var(--reward-muted);
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .reward-rung.is-peak .reward-amount {
+    color: var(--reward-orange-light);
+  }
+
+  /* ==========================================================
+   ANIMATED GRADIENT FILL
+   ========================================================== */
+
+  .reward-fill {
+    position: relative;
+
+    width: 100%;
+
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+
+    background: linear-gradient(180deg, #c56129 0%, #f5ad59 100%);
+
+    border-top: 2px solid var(--reward-orange-light);
+
+    transition: transform 1100ms var(--reward-ease);
+  }
+
+  /* JavaScript adds .is-revealed to the outer wrapper */
+
+  .reward-ladder-block.is-revealed .reward-fill {
+    transform: scaleY(1);
+  }
+
+  /* ==========================================================
+   RUNG HEIGHTS
+   ========================================================== */
+
+  .reward-rung:nth-child(1) {
+    min-height: 170px;
+  }
+
+  .reward-rung:nth-child(2) {
+    min-height: 205px;
+  }
+
+  .reward-rung:nth-child(3) {
+    min-height: 248px;
+  }
+
+  .reward-rung:nth-child(4) {
+    min-height: 300px;
+  }
+
+  .reward-rung:nth-child(5) {
+    min-height: 360px;
+  }
+
+  /* ==========================================================
+   DESKTOP FILL HEIGHTS
+   ========================================================== */
+
+  .reward-rung:nth-child(1) .reward-fill {
+    height: 46px;
+    transition-delay: 50ms;
+  }
+
+  .reward-rung:nth-child(2) .reward-fill {
+    height: 80px;
+    transition-delay: 150ms;
+  }
+
+  .reward-rung:nth-child(3) .reward-fill {
+    height: 120px;
+    transition-delay: 250ms;
+  }
+
+  .reward-rung:nth-child(4) .reward-fill {
+    height: 170px;
+    transition-delay: 350ms;
+  }
+
+  .reward-rung:nth-child(5) .reward-fill {
+    height: 228px;
+    transition-delay: 450ms;
+  }
+
+  /* ==========================================================
+   NO-LIMIT RIBBON
+   ========================================================== */
+
+  .reward-ribbon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+
+    padding: 4px 8px;
+
+    color: #15120b;
+    background-color: var(--reward-orange-light);
+    border-radius: 3px;
+
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ==========================================================
+   LADDER BASE
+   ========================================================== */
+
+  .reward-ladder-base {
+    width: 100%;
+    height: 1px;
+    margin-top: -1px;
+
+    background-color: var(--reward-line-orange);
+  }
+
+  /* ==========================================================
+   SUPPORTING NOTE
+   ========================================================== */
+
+  .reward-note {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-top: 32px;
+  }
+
+  .reward-note p {
+    margin: 0;
+
+    color: var(--reward-text);
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  .reward-note-dot {
+    flex: none;
+
+    width: 8px;
+    height: 8px;
+
+    background-color: var(--reward-orange);
+    border-radius: 50%;
+  }
+
+  /* ==========================================================
+   TABLET AND MOBILE
+   Converts vertical columns into horizontal progress bars
+   ========================================================== */
+
+  @media screen and (max-width: 991px) {
+    .reward-ladder {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .reward-rung {
+      min-height: 0 !important;
+
+      flex-direction: row;
+      align-items: center;
+
+      border: 1px solid var(--reward-line);
+      border-radius: 8px;
+    }
+
+    .reward-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+
+      width: 0;
+      height: 100% !important;
+
+      transform: none;
+      transform-origin: left;
+      will-change: width;
+
+      background: linear-gradient(90deg, #c56129 0%, #f5ad59 100%);
+
+      border-top: 0;
+      border-left: 3px solid var(--reward-orange);
+
+      transition: width 1000ms var(--reward-ease);
+    }
+
+    .reward-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+
+      width: 100%;
+    }
+
+    .reward-label {
+      margin-top: 0;
+    }
+
+    /* $200 divided by $500 */
+
+    .reward-ladder-block.is-revealed .reward-rung:nth-child(1) .reward-fill {
+      width: 40%;
+    }
+
+    /* $200 divided by $500 */
+
+    .reward-ladder-block.is-revealed .reward-rung:nth-child(2) .reward-fill {
+      width: 40%;
+    }
+
+    /* $300 divided by $500 */
+
+    .reward-ladder-block.is-revealed .reward-rung:nth-child(3) .reward-fill {
+      width: 60%;
+    }
+
+    /* $400 divided by $500 */
+
+    .reward-ladder-block.is-revealed .reward-rung:nth-child(4) .reward-fill {
+      width: 80%;
+    }
+
+    /* $500 divided by $500 */
+
+    .reward-ladder-block.is-revealed .reward-rung:nth-child(5) .reward-fill {
+      width: 100%;
+    }
+  }
+
+  /* ==========================================================
+   SMALL MOBILE
+   ========================================================== */
+
+  @media screen and (max-width: 479px) {
+    .reward-meta {
+      padding: 20px;
+    }
+
+    .reward-amount {
+      font-size: 28px;
+    }
+
+    .reward-label {
+      font-size: 10px;
+    }
+
+    .reward-ribbon {
+      top: 12px;
+      right: 12px;
+    }
+
+    .reward-note {
+      align-items: flex-start;
+    }
+
+    .reward-note p {
+      font-size: 17px;
+    }
+  }
+
+  /* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .reward-rung,
+    .reward-fill {
+      transition: none;
+    }
+
+    .reward-fill,
+    .reward-ladder-block.is-revealed .reward-fill {
+      transform: scaleY(1);
+    }
+  }
+
+  @media screen and (max-width: 991px) and (prefers-reduced-motion: reduce) {
+    .reward-ladder-block .reward-rung:nth-child(1) .reward-fill {
+      width: 40%;
+    }
+
+    .reward-ladder-block .reward-rung:nth-child(2) .reward-fill {
+      width: 40%;
+    }
+
+    .reward-ladder-block .reward-rung:nth-child(3) .reward-fill {
+      width: 60%;
+    }
+
+    .reward-ladder-block .reward-rung:nth-child(4) .reward-fill {
+      width: 80%;
+    }
+
+    .reward-ladder-block .reward-rung:nth-child(5) .reward-fill {
+      width: 100%;
+    }
+  }
+
+  /* Icon / number card */
+
+  .step {
+    position: relative;
+    padding: 32px 24px;
+
+    background: #111113;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+
+    transition:
+      transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-color 300ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      background-color 300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  /* ==========================================================
+   CARD HOVER
+   ========================================================== */
+
+  /* ==========================================================
+   PROGRESS CARD HOVER
+   Keeps all default Webflow colors unchanged
+   ========================================================== */
+
+  /* ==========================================================
+   PROGRESS CARD HOVER
+   Preserves existing Webflow colors, sizing, and icon shape
+   ========================================================== */
+
+  .card-progress {
+    position: relative;
+    will-change: transform;
+
+    transition:
+      transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 200ms ease,
+      border-color 200ms ease;
+  }
+
+  /* Card lifts on hover */
+
+  .card-progress:hover {
+    transform: translateY(-6px) !important;
+    border-color: rgba(197, 97, 41, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Preserves existing Webflow icon styling */
+
+  .card-num-container {
+    transition:
+      color 200ms ease,
+      background-color 200ms ease,
+      border-color 200ms ease,
+      transform 200ms ease;
+  }
+
+  /* Changes the icon container only when the card is hovered */
+
+  .card-progress:hover .card-num-container {
+    color: #15120b;
+    background-color: #f5ad59;
+    border-color: #f5ad59;
+    transform: scale(1.04);
+  }
+
+  /* Allows inline SVG strokes to follow the hover color */
+
+  .card-num-container svg,
+  .card-num-container svg path,
+  .card-num-container svg circle,
+  .card-num-container svg rect,
+  .card-num-container svg line,
+  .card-num-container svg polyline {
+    stroke: currentColor;
+  }
+
+  /* Prevents the lifted card from being clipped by its parent */
+
+  .card-progress-row,
+  .card-icon-block {
+    overflow: visible;
+  }
